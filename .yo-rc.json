@@ -1,0 +1,10 @@
+{
+  "generator-sicarator": {
+    "promptValues": {
+      "projectDescription": "Create a BigQuery datapipeline with Airflow dags",
+      "authorName": "WiemTr",
+      "authorEmail": "wiem.trigui@sicara.com",
+      "ci": null
+    }
+  }
+}
