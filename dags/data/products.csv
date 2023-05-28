@@ -1,0 +1,12 @@
+product_id,product_name,price,brand_type
+201,Product A,10.99,MDD
+202,Product B,5.99,MN
+203,Product C,15.99,MDD
+204,Product D,8.99,MDD
+205,Product E,12.99,MN
+206,Product F,9.99,MN
+207,Product G,14.99,MN
+208,Product H,7.99,MDD
+209,Product I,11.99,MN
+210,Product J,6.99,MDD
+211,Product J,-7,MDD
