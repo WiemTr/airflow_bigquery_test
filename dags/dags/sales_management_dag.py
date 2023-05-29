@@ -2,6 +2,7 @@ import functools
 
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.providers.google.cloud.operators.bigquery import (
     BigQueryCreateEmptyDatasetOperator,
     BigQueryInsertJobOperator,
@@ -10,7 +11,12 @@ from airflow.providers.google.cloud.transfers.gcs_to_bigquery import (
     GCSToBigQueryOperator,
 )
 
-from dags.constants import DEFAULT_DAG_ARGS, GOOGLE_CLOUD_PROJECT, PROJECT_ROOT_DIR
+from dags.constants import (
+    DEFAULT_DAG_ARGS,
+    GOOGLE_CLOUD_PROJECT,
+    PROJECT_ROOT_DIR,
+    QUALITY_TESTS_DAG,
+)
 from dags.dags_utils import create_table_from_csv, query_renderer
 
 with DAG(
@@ -94,19 +100,27 @@ with DAG(
             }
         },
     )
+
+    trigger_quality_tests_dag_task = TriggerDagRunOperator(
+        task_id="trigger_quality_tests_dag", trigger_dag_id=QUALITY_TESTS_DAG
+    )
+
 # pylint: disable=pointless-statement
 (
     create_sales_management_dataset_task
     >> create_customers_table_task
     >> create_sales_per_customer_table_task
+    >> trigger_quality_tests_dag_task
 )
 (
     create_sales_management_dataset_task
     >> create_products_table_task
     >> create_sales_per_customer_table_task
+    >> trigger_quality_tests_dag_task
 )
 (
     create_sales_management_dataset_task
     >> create_purchases_table_task
     >> create_sales_per_customer_table_task
+    >> trigger_quality_tests_dag_task
 )

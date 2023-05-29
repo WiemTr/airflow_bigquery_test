@@ -4,8 +4,9 @@ from pathlib import Path
 
 # Project
 PROJECT_ROOT_DIR = Path(os.path.abspath(__file__)).parents[0]
-GOOGLE_CLOUD_PROJECT="oceanic-hangout-388114"
-
+GOOGLE_CLOUD_PROJECT = "oceanic-hangout-388114"
+SALES_MANAGEMENT_DATASET = "sales_management_dataset"
+QUALITY_TESTS_DAG = "quality_tests_dag"
 
 # Airflow
 DEFAULT_DAG_ARGS = {
