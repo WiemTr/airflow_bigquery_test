@@ -16,6 +16,7 @@ from dags.constants import (
     GOOGLE_CLOUD_PROJECT,
     PROJECT_ROOT_DIR,
     QUALITY_TESTS_DAG,
+    SALES_MANAGEMENT_DATASET,
 )
 from dags.dags_utils import create_table_from_csv, query_renderer
 
@@ -34,7 +35,7 @@ with DAG(
         task_id="create_customers_table_from_csv",
         bucket="sales-management-bucket",
         source_objects=["customers.csv"],
-        destination_project_dataset_table="sales_management_dataset.customers",
+        destination_project_dataset_table=f"{SALES_MANAGEMENT_DATASET}.customers",
         schema_fields=[
             {"name": "customer_id", "type": "STRING"},
             {"name": "customer_name", "type": "STRING"},
@@ -49,7 +50,7 @@ with DAG(
         task_id="create_products_table_from_csv",
         bucket="sales-management-bucket",
         source_objects=["products.csv"],
-        destination_project_dataset_table="sales_management_dataset.products",
+        destination_project_dataset_table=f"{SALES_MANAGEMENT_DATASET}.products",
         schema_fields=[
             {"name": "product_id", "type": "STRING"},
             {"name": "product_name", "type": "STRING"},
@@ -73,7 +74,7 @@ with DAG(
                 "date": str,
             },
             date_columns=["date"],
-            table_id=f"{GOOGLE_CLOUD_PROJECT}.sales_management_dataset.purchases",
+            table_id=f"{GOOGLE_CLOUD_PROJECT}.{SALES_MANAGEMENT_DATASET}.purchases",
         ),
     )
 
@@ -87,12 +88,13 @@ with DAG(
                     params={
                         "google_cloud_project_id": GOOGLE_CLOUD_PROJECT,
                         "brand_types_list": ("MDD", "MN"),
+                        "project_dataset": SALES_MANAGEMENT_DATASET,
                     },
                 ),
                 "useLegacySql": False,
                 "destinationTable": {
                     "projectId": GOOGLE_CLOUD_PROJECT,
-                    "datasetId": "sales_management_dataset",
+                    "datasetId": SALES_MANAGEMENT_DATASET,
                     "tableId": "sales_per_customer",
                 },
                 "createDisposition": "CREATE_IF_NEEDED",

@@ -5,9 +5,9 @@ WITH
     product_id customer_id,
     price*quantity AS total_tx_price
   FROM
-    `{{ google_cloud_project_id }}.sales_management_dataset.purchases`
+    `{{ google_cloud_project_id }}.{{ project_dataset}}.purchases`
   LEFT JOIN
-    `{{ google_cloud_project_id }}.sales_management_dataset.products`
+    `{{ google_cloud_project_id }}.{{ project_dataset}}.products`
   USING
     (product_id)
   WHERE brand_type IN {{ brand_types_list }}
