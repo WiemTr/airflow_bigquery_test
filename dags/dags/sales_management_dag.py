@@ -103,7 +103,9 @@ with DAG(
     )
 
     trigger_quality_tests_dag_task = TriggerDagRunOperator(
-        task_id="trigger_quality_tests_dag", trigger_dag_id=QUALITY_TESTS_DAG
+        task_id="trigger_quality_tests_dag",
+        trigger_dag_id=QUALITY_TESTS_DAG,
+        wait_for_completion=True,
     )
 
 # pylint: disable=pointless-statement
