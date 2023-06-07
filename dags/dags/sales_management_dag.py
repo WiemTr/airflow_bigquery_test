@@ -28,7 +28,7 @@ with DAG(
 ) as dag:
     create_sales_management_dataset_task = BigQueryCreateEmptyDatasetOperator(
         task_id="create_sales_management_dataset",
-        dataset_id="sales_management_dataset",
+        dataset_id=SALES_MANAGEMENT_DATASET,
         location="eu",
     )
     create_customers_table_task = GCSToBigQueryOperator(
@@ -97,7 +97,6 @@ with DAG(
                     "datasetId": SALES_MANAGEMENT_DATASET,
                     "tableId": "sales_per_customer",
                 },
-                "createDisposition": "CREATE_IF_NEEDED",
                 "writeDisposition": "WRITE_TRUNCATE",
             }
         },
