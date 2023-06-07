@@ -1,7 +1,9 @@
 import functools
 
 from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
+from airflow.operators.python_operator import (  # pylint: disable=import-error, no-name-in-module
+    PythonOperator,
+)
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.providers.google.cloud.operators.bigquery import (
     BigQueryCreateEmptyDatasetOperator,
